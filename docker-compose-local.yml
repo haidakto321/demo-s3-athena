@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  athena:
+    image: postgres:10.11
+    container_name: athena
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+
