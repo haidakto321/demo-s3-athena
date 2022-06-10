@@ -1,0 +1,42 @@
+server:
+  debug: true
+  timezone: Asia/Tokyo
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${database.host}:${database.port}/${database.name}?stringtype=unspecified
+    username: ${database.user}
+    password: ${database.password}
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      leak-detection-threshold: 2000
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        temp.use_jdbc_metadata_defaults: false
+        format_sql: true
+
+  flyway:
+    enabled: false
+
+aws:
+  athena:
+    output-bucket-1: ${aws.athena.output-bucket:s3://kieusonhai-bucket/output/}
+    default-database-1: ${aws.athena.default-database:athena_test}
+
+logging.level:
+  root: INFO
+  com.ksh.s3athena: TRACE
+  org.hibernate.SQL: DEBUG
+
+springdoc:
+  api-docs:
+    enabled: false
+    path: /api-docs
+  swagger-ui:
+    url: /api-docs.yaml
